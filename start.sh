@@ -40,3 +40,20 @@ ami_setup "'roles=harden'" "'name=bastion'" 'bastion_ami_id'
 # Create Web AMI
 echo "***** Creating Web AMI..."
 ami_setup "'roles=harden,web'" "'name=web'" 'web_ami_id'
+
+# run Terraform
+
+echo "---------------------------------------------------"
+echo "Running Terraform"
+echo "---------------------------------------------------"
+
+cd Terraform
+echo "***** Terraform Initializing..."
+terraform init
+
+echo "***** Terraform Creating Plan..."
+terraform plan -out plan.terraform
+
+echo "***** Terraform Apply..."
+terraform apply plan.terraform
+rm plan.terraform
