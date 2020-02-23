@@ -107,3 +107,30 @@ data "aws_ami" "bastion" {
 
   owners = [var.ubuntu_ami_owner]
 }
+
+#---------------------------------------------------
+# Local variables for use in Dynamic Creation of resources
+#---------------------------------------------------
+
+# If we need more than one Load Balancer or EC2 Resource etc
+locals {
+  count_inst_asg = "${length(var.instance_config_asg) >= 1 ? length(var.instance_config_asg) : 0}"
+  count_elb      = "${length(var.elb_config) >= 1 ? length(var.elb_config) : 0}"
+}
+
+#---------------------------------------------------
+# Create Bastion
+#---------------------------------------------------
+resource "aws_instance" "bastion" {
+  private_ip    = cidrhost(var.public_subnet_cidr, 21)
+  ami           = data.aws_ami.bastion.id
+  instance_type = lookup(var.instance_config[0], "instance_type")
+  key_name      = aws_key_pair.generated_key.key_name
+
+  vpc_security_group_ids = [aws_security_group.bastion_sg_pub.id]
+  subnet_id              = aws_subnet.public-subnet.id
+
+  tags = {
+    Name = lookup(var.instance_config[0], "name")
+  }
+}
