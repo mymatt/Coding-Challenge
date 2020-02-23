@@ -1,0 +1,23 @@
+---
+
+apache_dir: /var/www/python
+
+www_dir: /var/www
+
+destination: terraform
+
+dest_dir: /tmp
+
+apache_port: 80
+
+change_port: false
+
+override_redirects: false
+
+git_repo: https://github.com/AfterpayTouch/recruitment-challenge-1.git
+
+repo_folder: "{{ dest_dir }}/repo"
+
+app_name: tiny_app
+
+apache_config: /etc/apache2/sites-available
