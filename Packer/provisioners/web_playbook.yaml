@@ -1,0 +1,20 @@
+---
+- name: setup web server
+  hosts: localhost
+  become: true
+  become_user: root
+
+# install multiple roles from command line
+# Use: packer build -var 'roles=role1,role2,role3' template.json
+# In this case just one role => packer build -var 'roles=web' pk_t.json
+  vars:
+    roles: web
+    dest_folder: /tmp
+
+  tasks:
+  - name: install roles
+    include_role:
+      name: "{{ item }}"
+    vars:
+      dest_dir: "{{ dest_folder }}"
+    with_items: "{{ roles }}"
