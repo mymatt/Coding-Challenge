@@ -230,3 +230,65 @@ resource "aws_elb" "elb" {
     Name = lookup(var.elb_config[count.index], "name")
   }
 }
+
+#---------------------------------------------------
+# Scaling Up - Policy and Alarm
+#---------------------------------------------------
+resource "aws_autoscaling_policy" "up_policy" {
+  count                  = local.count_inst_asg
+  name                   = "up_policy"
+  scaling_adjustment     = 1
+  adjustment_type        = "ChangeInCapacity"
+  cooldown               = 300
+  autoscaling_group_name = element(aws_autoscaling_group.tf_asg.*.name, count.index)
+}
+
+resource "aws_cloudwatch_metric_alarm" "web_cpu_alarm_up" {
+  count               = local.count_inst_asg
+  alarm_name          = "alarm_cpu_up"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods  = "5"
+  metric_name         = "CPUUtilization"
+  namespace           = "AWS/EC2"
+  period              = "300"
+  statistic           = "Average"
+  threshold           = "80"
+
+  dimensions = {
+    AutoScalingGroupName = element(aws_autoscaling_group.tf_asg.*.name, count.index)
+  }
+
+  alarm_description = "CPU utilization EC2 - Up"
+  alarm_actions     = [element(aws_autoscaling_policy.up_policy.*.arn, count.index)]
+}
+
+#---------------------------------------------------
+# Scaling Down - Policy and Alarm
+#---------------------------------------------------
+resource "aws_autoscaling_policy" "down_policy" {
+  count                  = local.count_inst_asg
+  name                   = "down_policy"
+  scaling_adjustment     = -1
+  adjustment_type        = "ChangeInCapacity"
+  cooldown               = 300
+  autoscaling_group_name = element(aws_autoscaling_group.tf_asg.*.name, count.index)
+}
+
+resource "aws_cloudwatch_metric_alarm" "web_cpu_alarm_down" {
+  count               = local.count_inst_asg
+  alarm_name          = "alarm_cpu_down"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods  = "5"
+  metric_name         = "CPUUtilization"
+  namespace           = "AWS/EC2"
+  period              = "300"
+  statistic           = "Average"
+  threshold           = "10"
+
+  dimensions = {
+    AutoScalingGroupName = element(aws_autoscaling_group.tf_asg.*.name, count.index)
+  }
+
+  alarm_description = "CPU utilization EC2 - Down"
+  alarm_actions     = [element(aws_autoscaling_policy.down_policy.*.arn, count.index)]
+}
