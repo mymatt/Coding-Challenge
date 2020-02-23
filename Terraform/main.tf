@@ -134,3 +134,59 @@ resource "aws_instance" "bastion" {
     Name = lookup(var.instance_config[0], "name")
   }
 }
+
+#---------------------------------------------------
+# Create AWS launch configurations for ASG's
+#---------------------------------------------------
+resource "aws_launch_configuration" "tf_lc" {
+  count = local.count_inst_asg
+
+  image_id = data.aws_ami.web.id
+
+  # associate_public_ip_address = true
+
+  instance_type        = lookup(var.instance_config_asg[count.index], "instance_type")
+  key_name             = aws_key_pair.generated_key.key_name
+  iam_instance_profile = aws_iam_instance_profile.ec2_profile.name
+
+  security_groups = [aws_security_group.web_sg.id]
+
+  # no user_data, using Packer
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
+#---------------------------------------------------
+# Create AWS autoscaling groups
+#---------------------------------------------------
+resource "aws_autoscaling_group" "tf_asg" {
+  count = local.count_inst_asg
+
+  depends_on = [aws_elb.elb]
+
+  name                 = "${lookup(var.instance_config_asg[count.index], "name")}-${element(aws_launch_configuration.tf_lc.*.name, count.index)}"
+  launch_configuration = element(aws_launch_configuration.tf_lc.*.name, count.index)
+
+  load_balancers = [lookup(var.elb_config[count.index], "name")]
+
+  vpc_zone_identifier = [aws_subnet.private-subnet.id, aws_subnet.private-subnet-2.id]
+
+  min_size         = lookup(var.instance_config_asg[count.index], "min")
+  max_size         = lookup(var.instance_config_asg[count.index], "max")
+  desired_capacity = lookup(var.instance_config_asg[count.index], "desired")
+
+  health_check_type         = "ELB"
+  health_check_grace_period = 300
+
+  lifecycle {
+    create_before_destroy = true
+  }
+
+  tag {
+    key                 = "Name"
+    value               = lookup(var.instance_config_asg[count.index], "name")
+    propagate_at_launch = true
+  }
+}
