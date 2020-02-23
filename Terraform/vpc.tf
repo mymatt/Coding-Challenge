@@ -78,3 +78,45 @@ resource "aws_route_table_association" "rt-as-pub-2" {
   subnet_id      = aws_subnet.public-subnet-2.id
   route_table_id = aws_route_table.public-rt.id
 }
+
+#---------------------------------------------------
+# Private Subnets - For Web Server
+#---------------------------------------------------
+
+resource "aws_subnet" "private-subnet" {
+  vpc_id                  = aws_vpc.default.id
+  cidr_block              = var.private_subnet_cidr
+  availability_zone       = var.availability_zone_1
+  map_public_ip_on_launch = false
+
+  tags = {
+    Name = "tf-private-subnet"
+  }
+}
+
+resource "aws_subnet" "private-subnet-2" {
+  vpc_id                  = aws_vpc.default.id
+  cidr_block              = var.private_subnet_2_cidr
+  availability_zone       = var.availability_zone_2
+  map_public_ip_on_launch = false
+
+  tags = {
+    Name = "tf-private-subnet-2"
+  }
+}
+
+#---------------------------------------------------
+# NAT gateways
+#---------------------------------------------------
+
+resource "aws_nat_gateway" "nat1" {
+  allocation_id = aws_eip.nat1.id
+  subnet_id     = aws_subnet.public-subnet.id
+  depends_on    = [aws_internet_gateway.igw]
+}
+
+resource "aws_nat_gateway" "nat2" {
+  allocation_id = aws_eip.nat2.id
+  subnet_id     = aws_subnet.public-subnet-2.id
+  depends_on    = [aws_internet_gateway.igw]
+}
