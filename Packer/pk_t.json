@@ -20,3 +20,29 @@
     "host_function": "web",
     "ami_generic": "Packer"
   },
+  "sensitive-variables": ["aws_access_key", "aws_secret_key"],
+  "builders": [
+    {
+      "type": "amazon-ebs",
+      "access_key": "{{user `aws_access_key`}}",
+      "secret_key": "{{user `aws_secret_key`}}",
+      "region": "{{user `region`}}",
+      "source_ami_filter": {
+                "filters": {
+                    "name": "{{user `ami_name`}}",
+                    "root-device-type": "{{user `root_device`}}",
+                    "virtualization-type": "{{user `virtual_type`}}"
+                },
+                "most_recent": true,
+                "owners": [
+                    "{{user `owners`}}"
+                ]
+            },
+      "instance_type": "{{user `instance_type`}}",
+      "ssh_username": "{{user `username`}}",
+      "ami_name": "{{user `hostname`}}-{{timestamp}}",
+      "tags": {
+        "Name": "{{user `ami_generic`}}-{{user `name` }}"
+      }
+    }
+  ],
