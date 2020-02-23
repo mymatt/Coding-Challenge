@@ -22,7 +22,6 @@
       - tree
       - git
       - python3-pip
-      - libapache2-modsecurity
 
 - name: Create home
   file:
@@ -75,9 +74,6 @@
 
 - name: enable mod-wsgi
   command: a2enmod wsgi
-
-- name: enable mod-security
-  command: a2enmod mod-security
 
 - name: Change Apache port - ports.conf
   shell: "sudo sed -i -e 's/^Listen.*$/Listen {{ apache_port }}/' /etc/apache2/ports.conf"

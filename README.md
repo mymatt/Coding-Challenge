@@ -99,7 +99,6 @@ ssh -i key_ec2.pem ubuntu@webserver_private_ip
 - pulls code from repository
 - install apache
 - install apache WSGI mod for serving Python app
-- apache Security mod
 - enable virtual site
 - update apache config with new directory
 - installs python requirements from repo
@@ -148,7 +147,7 @@ Creates 2 AMI's
 
 ### Improvements
 - CI/CD Pipeline to replace Bash Script
-- Many additional hardening and security measures, only touched upon a few
+- Many additional hardening and security measures, i.e apache modsecurity
 - Migrate to Application Load Balancer from Classic
 - No need for NAT Gateways because of Packer
 - Use Molecule to test ansible role

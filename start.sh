@@ -4,7 +4,7 @@ set -e
 ami_setup(){
   set -x
 
-  MAN=Packer/manifest/manifest.json
+  MAN=manifest/manifest.json
 
   # run packer, specifiying which ansible roles to use
   cd Packer
@@ -20,7 +20,7 @@ ami_setup(){
   AMI_ID=$(jq -r '.builds[-1].artifact_id' ${MAN} | cut -d ":" -f2)
 
   # remove manifast for next iteration
-  rm Packer/manifest/*
+  rm manifest/*
 
   #update ami id variable for EC2 resource in terraform variables file
   AMI_TYPE=$3
@@ -48,7 +48,7 @@ echo "---------------------------------------------------"
 echo "Running Terraform"
 echo "---------------------------------------------------"
 
-cd Terraform
+cd ../Terraform
 echo "***** Terraform Initializing..."
 terraform init
 
