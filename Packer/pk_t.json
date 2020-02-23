@@ -1,0 +1,22 @@
+{
+  "variables": {
+    "name": "web",
+    "roles": "",
+    "profile": "ec2play",
+    "aws_access_key": "{{ env `AWS_ACCESS_KEY_ID`}}",
+    "aws_secret_key": "{{ env `AWS_SECRET_ACCESS_KEY`}}",
+    "cred_file": "~/.aws/credentials",
+    "region": "ap-southeast-2",
+    "instance_type": "t2.micro",
+    "username": "ubuntu",
+    "ami_name": "ubuntu/images/*ubuntu-bionic-18.04-amd64-server-*",
+    "virtual_type": "hvm",
+    "root_device": "ebs",
+    "type_build": "amazon-ebs",
+    "owners":"099720109477",
+    "dir":"tmp",
+    "playbook":"web_playbook.yaml",
+    "hostname": "packer_web",
+    "host_function": "web",
+    "ami_generic": "Packer"
+  },
