@@ -153,3 +153,4 @@ Creates 2 AMI's
 - No need for NAT Gateways because of Packer
 - Use Molecule to test ansible role
 - Use of Docker containers, ECS
+- Currently working on script to destroy: packer AMI/Snapshots, terraform infrastructure 
