@@ -82,13 +82,40 @@ Launch
 - Public IP address of Bastion is output to Command Line to retrieve
 - Transfer key to bastion
 ```
-scp -i key_ec2.pem key_ec2.pem ubuntu@bastion_ip:~/
+scp -i key_ec2.pem key_ec2.pem ubuntu@bastion_public_ip:~/
 ```
 - ssh into bastion
 ```
-ssh -i key_ec2.pem ubuntu@bastion_ip
+ssh -i key_ec2.pem ubuntu@bastion_public_ip
 ```
 - ssh into Web Server
 ```
-ssh -i key_ec2.pem ubuntu@webserver_ip
+ssh -i key_ec2.pem ubuntu@webserver_private_ip
 ```
+
+### Ansible Roles
+**Role 1 - Web**
+- updates all packages
+- pulls code from repository
+- installs apache
+      + WSGI mod for serving Python app
+      + Security mod
+      + enable virtual site
+      + update apache config with new directory
+- installs python requirements from repo
+- installs/enables NTP (chronyd), telnet, mtr, tree
+
+**Role 2 - Harden**
+- covers requirements
+      + disable IPv6
+      + sets max "open files" limit across all users/processes, soft & hard, to 65535
+      + SELinux
+      + SSH Security
+      + Firewall
+
+*Configuration Note*
+- modifying config files involves a mixture of bash scripting, templating, lineinfile
+- tasks need to be idempotent, so there’s a risk when using shell, however, the desire was to provide some sed code
+  In this case, a whole line is replaced, by matching the first part of the line, so idempotence is achieved
+- Lineinfile with regexp to achieve idempotence
+- Or alternatively use ansible template module with jinja2 variable substitution and move whole apache configuration file to server
