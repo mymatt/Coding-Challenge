@@ -22,6 +22,7 @@ ami_setup(){
   # remove manifast for next iteration
   rm manifest/*
 
+  cd ..
   #update ami id variable for EC2 resource in terraform variables file
   AMI_TYPE=$3
   sed -i -e "/${AMI_TYPE}/{n;s/= .*$/= \"${AMI_ID}\"/;}" Terraform/io.tf
@@ -36,11 +37,11 @@ echo "---------------------------------------------------"
 
 # Create Bastion AMI
 echo "***** Creating Bastion AMI..."
-ami_setup "'roles=harden'" "'name=bastion'" 'bastion_ami_id'
+ami_setup 'ans_roles=harden' 'name=bastion' 'bastion_ami_id'
 
 # Create Web AMI
 echo "***** Creating Web AMI..."
-ami_setup "'roles=harden,web'" "'name=web'" 'web_ami_id'
+ami_setup 'ans_roles=harden,web' 'name=web' 'web_ami_id'
 
 # run Terraform
 

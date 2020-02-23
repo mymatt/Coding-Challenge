@@ -148,6 +148,7 @@ Creates 2 AMI's
 ### Improvements
 - CI/CD Pipeline to replace Bash Script
 - Many additional hardening and security measures, i.e apache modsecurity
+- Encountered a few SELinux install issues currently working through
 - Migrate to Application Load Balancer from Classic
 - No need for NAT Gateways because of Packer
 - Use Molecule to test ansible role
