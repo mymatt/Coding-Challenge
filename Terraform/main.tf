@@ -292,3 +292,36 @@ resource "aws_cloudwatch_metric_alarm" "web_cpu_alarm_down" {
   alarm_description = "CPU utilization EC2 - Down"
   alarm_actions     = [element(aws_autoscaling_policy.down_policy.*.arn, count.index)]
 }
+
+#---------------------------------------------------
+# Attach Autoscaling groups to elb
+#---------------------------------------------------
+resource "aws_autoscaling_attachment" "asg_attachment_bar" {
+  count                  = local.count_inst_asg
+  autoscaling_group_name = element(aws_autoscaling_group.tf_asg.*.id, count.index)
+  elb                    = element(aws_elb.elb.*.id, count.index)
+}
+
+#---------------------------------------------------
+# Instance Data Source - used to output Bastion IP
+#---------------------------------------------------
+
+data "aws_instance" "bastion" {
+  filter {
+    name   = "tag:Name"
+    values = ["bastion"]
+  }
+
+  depends_on = [aws_instance.bastion]
+}
+
+#---------------------------------------------------
+# Elastic IP's required for NAT Gateways
+#---------------------------------------------------
+resource "aws_eip" "nat1" {
+  vpc = true
+}
+
+resource "aws_eip" "nat2" {
+  vpc = true
+}
