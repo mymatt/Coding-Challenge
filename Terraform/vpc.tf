@@ -120,3 +120,45 @@ resource "aws_nat_gateway" "nat2" {
   subnet_id     = aws_subnet.public-subnet-2.id
   depends_on    = [aws_internet_gateway.igw]
 }
+
+#---------------------------------------------------
+# Routes for private subnets to use NAT gateway
+#---------------------------------------------------
+
+resource "aws_route_table" "nat1" {
+  vpc_id = aws_vpc.default.id
+
+  tags = {
+    Name = "tf-nat-route-table1"
+  }
+}
+
+resource "aws_route_table" "nat2" {
+  vpc_id = aws_vpc.default.id
+
+  tags = {
+    Name = "tf-nat-route-table2"
+  }
+}
+
+resource "aws_route" "private_nat_gateway1" {
+  route_table_id         = aws_route_table.nat1.id
+  destination_cidr_block = "0.0.0.0/0"
+  nat_gateway_id         = aws_nat_gateway.nat1.id
+}
+
+resource "aws_route" "private_nat_gateway2" {
+  route_table_id         = aws_route_table.nat2.id
+  destination_cidr_block = "0.0.0.0/0"
+  nat_gateway_id         = aws_nat_gateway.nat2.id
+}
+
+resource "aws_route_table_association" "rt-as-nat" {
+  subnet_id      = aws_subnet.private-subnet.id
+  route_table_id = aws_route_table.nat1.id
+}
+
+resource "aws_route_table_association" "rt-as-nat-2" {
+  subnet_id      = aws_subnet.private-subnet-2.id
+  route_table_id = aws_route_table.nat2.id
+}
