@@ -46,3 +46,22 @@
       }
     }
   ],
+
+  "provisioners": [
+    {
+      "type": "shell",
+      "script": "scripts/user_data.sh",
+      "pause_before": "10s"
+    },
+    {
+      "type": "file",
+      "source": "provisioners",
+      "destination": "/{{user `dir`}}"
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "sudo ansible-playbook -i 'localhost,' -c local /{{user `dir`}}/provisioners/{{user `playbook`}} -e 'dest_folder={{user `dir`}} roles={{user `roles`}} ansible_python_interpreter=/usr/bin/python3' -v 2>&1 | sudo tee -a /{{user `dir`}}/log"
+        ]
+    }
+  ],
