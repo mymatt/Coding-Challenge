@@ -105,7 +105,7 @@ data "aws_ami" "bastion" {
     values = [var.ami_type]
   }
 
-  owners = [var.ubuntu_ami_owner]
+  owners = [var.account_ami_owner]
 }
 
 #---------------------------------------------------
