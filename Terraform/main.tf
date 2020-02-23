@@ -71,3 +71,39 @@ resource "aws_iam_instance_profile" "ec2_profile" {
   name = "ec2_iam_profile"
   role = aws_iam_role.ec2_access_role.name
 }
+
+#---------------------------------------------------
+# Get AMI - Created by Packer (Immutable Infrastructure)
+#---------------------------------------------------
+
+data "aws_ami" "web" {
+  most_recent = true
+
+  filter {
+    name   = "image-id"
+    values = [var.web_ami_id]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = [var.ami_type]
+  }
+
+  owners = [var.account_ami_owner]
+}
+
+data "aws_ami" "bastion" {
+  most_recent = true
+
+  filter {
+    name   = "image-id"
+    values = [var.bastion_ami_id]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = [var.ami_type]
+  }
+
+  owners = [var.ubuntu_ami_owner]
+}
