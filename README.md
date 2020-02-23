@@ -98,20 +98,20 @@ ssh -i key_ec2.pem ubuntu@webserver_private_ip
 - updates all packages
 - pulls code from repository
 - installs apache
-      + WSGI mod for serving Python app
-      + Security mod
-      + enable virtual site
-      + update apache config with new directory
+      - WSGI mod for serving Python app
+      - Security mod
+      - enable virtual site
+      - update apache config with new directory
 - installs python requirements from repo
 - installs/enables NTP (chronyd), telnet, mtr, tree
 
 **Role 2 - Harden**
 - covers requirements
-      + disable IPv6
-      + sets max "open files" limit across all users/processes, soft & hard, to 65535
-      + SELinux
-      + SSH Security
-      + Firewall
+      - disable IPv6
+      - sets max "open files" limit across all users/processes, soft & hard, to 65535
+      - SELinux
+      - SSH Security
+      - Firewall
 
 *Configuration Note*
 - modifying config files involves a mixture of bash scripting, templating, lineinfile
@@ -122,10 +122,10 @@ ssh -i key_ec2.pem ubuntu@webserver_private_ip
 
 ### Packer
 - Creates 2 AMI's
-      + Web Server
+      - Web Server
         - Ansible Roles Harden and Web
 
-      + Bastion
+      - Bastion
         - Ansible Roles Harden
 
 ### Terraform - AWS
