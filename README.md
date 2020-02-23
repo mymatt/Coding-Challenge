@@ -13,7 +13,7 @@ There are 3 stages
 2) Output Manifest file with AMI-ID's, then update Terraform Variables file
 3) Create AWS Resources using Terraform (using newly created AMI's)
 
-![Image Stages](/Users/M/Employment/DevOps/Project/AfterPay.png)
+![Image Stages](https://github.com/mymatt/Coding-Challenge/blob/master/images/AfterPay_workflow.png)
 
 #### Objective
 Fully Automate all 3 stages
@@ -32,7 +32,7 @@ Fully Automate all 3 stages
 - Account Setup
 AWS account must be created
 
-![Image Account](/Users/M/Employment/DevOps/Project/aws_account.png)
+![Image Account](https://github.com/mymatt/Coding-Challenge/blob/master/images/afterpay_account.png)
 
 - Generate Credentials on AWS
 Retrieve Access and Secret Keys, and Account Number
@@ -130,7 +130,7 @@ ssh -i key_ec2.pem ubuntu@webserver_private_ip
 
 ### Terraform - AWS
 
-![Image Stages](/Users/M/Employment/DevOps/Project/AfterPay2.png)
+![Image Stages](https://github.com/mymatt/Coding-Challenge/blob/master/images/AfterPay_aws.png)
 
 - 2 Availability Zones
 - Public and Private Subnets (2 Each. 1 for each AZ for Redundancy)
@@ -145,7 +145,7 @@ ssh -i key_ec2.pem ubuntu@webserver_private_ip
 - Web Server receives traffic only via Load Balancer
 - Load Balancer is public facing
 
-![Image Stages](/Users/M/Employment/DevOps/Project/AfterPay3.png)
+![Image Stages](https://github.com/mymatt/Coding-Challenge/blob/master/images/AfterPay_sec.png)
 
 ### Improvements
 - CI/CD Pipeline to replace Bash Script
