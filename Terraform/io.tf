@@ -164,3 +164,17 @@ variable "sg" {
 variable "id" {
   default = "id"
 }
+
+#---------------------------------------------------
+# Outputs
+#---------------------------------------------------
+
+# Output Bastion IP for SSH into Web Server
+output "bastion_public_ip" {
+  value = "${data.aws_instance.bastion.public_ip}"
+}
+
+# output DNS name for Load Balancer to test
+output "ext_proxy_elb_dns" {
+  value = "${element(aws_elb.elb.*.dns_name, 0)}"
+}
