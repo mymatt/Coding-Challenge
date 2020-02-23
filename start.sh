@@ -49,7 +49,7 @@ echo "---------------------------------------------------"
 echo "Running Terraform"
 echo "---------------------------------------------------"
 
-cd ../Terraform
+cd Terraform
 echo "***** Terraform Initializing..."
 terraform init
 
