@@ -2,9 +2,9 @@
 ## Recruitment Challenge
 
 ### Tools / Resources
-Orchestration - *Terraform*
-Configuration Management - *Ansible*
-Image Builds for Immutable Infrastructure - *Packer*
+- Orchestration - *Terraform*
+- Configuration Management - *Ansible*
+- Image Builds for Immutable Infrastructure - *Packer*
 
 ### Stages
 There are 3 stages
