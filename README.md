@@ -76,3 +76,19 @@ Launch
 ### View Web Site
 - The Load Balancer DNS is output to Command Line to retrieve e.g elbweb-886245521.ap-southeast-2.elb.amazonaws.com
 - Enter into browser to view 'Hello Afterpay!'
+
+### SSH
+- Terraform generates key in terraform directory
+- Public IP address of Bastion is output to Command Line to retrieve
+- Transfer key to bastion
+```
+scp -i key_ec2.pem key_ec2.pem ubuntu@bastion_ip:~/
+```
+- ssh into bastion
+```
+ssh -i key_ec2.pem ubuntu@bastion_ip
+```
+- ssh into Web Server
+```
+ssh -i key_ec2.pem ubuntu@webserver_ip
+```
