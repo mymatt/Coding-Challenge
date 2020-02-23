@@ -190,3 +190,43 @@ resource "aws_autoscaling_group" "tf_asg" {
     propagate_at_launch = true
   }
 }
+
+#---------------------------------------------------
+# Create Elastic Load Balancer
+#---------------------------------------------------
+resource "aws_elb" "elb" {
+  count = local.count_elb
+
+  name = lookup(var.elb_config[count.index], "name")
+
+  subnets = ["${lookup(var.elb_config[count.index], "subnet") == "private" ? aws_subnet.private-subnet.id : aws_subnet.public-subnet.id}", "${lookup(var.elb_config[count.index], "subnet") == "private" ? aws_subnet.private-subnet-2.id : aws_subnet.public-subnet-2.id}"]
+
+  security_groups = [aws_security_group.elb_web_sg.id]
+
+  cross_zone_load_balancing = true
+
+  idle_timeout                = 400
+  connection_draining         = true
+  connection_draining_timeout = 400
+
+  internal = lookup(var.elb_config[count.index], "internal")
+
+  health_check {
+    healthy_threshold   = 2
+    unhealthy_threshold = 8
+    timeout             = 60
+    interval            = 300
+    target              = "HTTP:80/"
+  }
+
+  listener {
+    lb_port           = 80
+    lb_protocol       = "http"
+    instance_port     = 80
+    instance_protocol = "http"
+  }
+
+  tags = {
+    Name = lookup(var.elb_config[count.index], "name")
+  }
+}
