@@ -62,3 +62,17 @@ Run script
 ```
 ./tfvar.sh -v ec2profile=art account_ami_owner=notart
 ```
+
+### Run
+Ensure script is executable
+```
+chmod +x start.sh
+```
+Launch
+```
+./start.sh
+```
+
+### View Web Site
+- The Load Balancer DNS is output to Command Line to retrieve e.g elbweb-886245521.ap-southeast-2.elb.amazonaws.com
+- Enter into browser to view 'Hello Afterpay!'
