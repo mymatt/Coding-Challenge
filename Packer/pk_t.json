@@ -65,3 +65,12 @@
         ]
     }
   ],
+
+  "post-processors": [
+    {
+      "type": "manifest",
+      "output": "manifest/manifest.json",
+      "strip_path": true
+    }
+  ]
+}
