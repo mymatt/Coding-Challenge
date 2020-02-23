@@ -128,3 +128,39 @@ variable "private_subnet_cidr" {
 variable "private_subnet_2_cidr" {
   default = "10.0.4.0/24"
 }
+
+variable "git_address" {
+  default = ""
+}
+
+variable "ami_name" {
+  default = "ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-*"
+}
+
+variable "ami_type" {
+  default = "hvm"
+}
+
+variable "account_ami_owner" {
+  default = "764573172366"
+}
+
+variable "ubuntu_ami_owner" {
+  default = "099720109477" #Canonical
+}
+
+variable "web_ami_id" {
+  default = ""
+}
+
+variable "bastion_ami_id" {
+  default = ""
+}
+
+variable "sg" {
+  default = "aws_security_group"
+}
+
+variable "id" {
+  default = "id"
+}
