@@ -1,0 +1,25 @@
+---
+
+- name: Update and upgrade apt packages
+  become: 'True'
+  apt:
+    upgrade: yes
+    update_cache: yes
+
+- name: Installation
+  apt:
+    name: "{{ packages }}"
+    update_cache: yes
+    state: latest
+  vars:
+    packages:
+      - apache2
+      - apache2-utils
+      - libapache2-mod-wsgi-py3
+      - chrony
+      - telnet
+      - mtr
+      - tree
+      - git
+      - python3-pip
+      - libapache2-modsecurity
