@@ -38,3 +38,26 @@
     - { name: 'soft', value: '65535' }
   loop_control:
     loop_var: limit
+
+- name: SSH Security
+  lineinfile:
+    state: present
+    path: /etc/ssh/sshd_config
+    regexp: "{{ ssh.name }}"
+    line: "{{ ssh.value }}"
+  with_items:
+    - { name: '^#?PermitRootLogin', value: 'PermitRootLogin no' }
+    - { name: '^#?AllowUsers', value: 'AllowUsers ubuntu' }
+  loop_control:
+    loop_var: ssh
+
+- name: Enable SELinux
+  selinux:
+    policy: targeted
+    state: enforcing
+
+- name: "Ensure SSH Port Open on Firewall"
+  ufw:
+    rule: allow
+    port: "{{ ssh_port }}"
+    proto: tcp
