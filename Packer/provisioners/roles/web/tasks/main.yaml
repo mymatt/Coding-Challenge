@@ -34,3 +34,20 @@
     repo: "{{ git_repo }}"
     dest: "{{ repo_folder }}"
     update: yes
+
+- name: install Python requirements (using python3)
+  pip:
+    chdir: "{{ repo_folder }}"
+    requirements: requirements.txt
+
+- name: ensure app runs as python3
+  lineinfile:
+    path: "{{ repo_folder }}/tiny_app.py"
+    line: '#!/usr/bin/env python3'
+    insertbefore: BOF
+
+- name: copy python file to web directory
+  copy:
+     src: "{{ repo_folder }}/tiny_app.py"
+     dest: "{{ apache_dir }}"
+  delegate_to: localhost
