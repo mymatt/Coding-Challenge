@@ -14,3 +14,27 @@
   vars:
     packages:
       - selinux-utils
+
+- name: Disable IPv6
+  sysctl:
+    name: "{{ item.name }}"
+    value: "{{ item.value }}"
+    sysctl_set: yes
+    state: present
+    reload: yes
+  with_items:
+    - { name: 'net.ipv6.conf.all.disable_ipv6', value: '1' }
+    - { name: 'net.ipv6.conf.default.disable_ipv6', value: '1' }
+    - { name: 'net.ipv6.conf.lo.disable_ipv6', value: '1' }
+
+- name: Limit "open files" All Users/Processes in /etc/security/limits.conf
+  pam_limits:
+    domain: '*'
+    limit_type: "{{ limit.name }}"
+    limit_item: nofile
+    value: "{{ limit.value }}"
+  with_items:
+    - { name: 'hard', value: '65535' }
+    - { name: 'soft', value: '65535' }
+  loop_control:
+    loop_var: limit
