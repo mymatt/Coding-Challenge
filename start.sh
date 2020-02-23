@@ -7,7 +7,8 @@ ami_setup(){
   MAN=Packer/manifest/manifest.json
 
   # run packer, specifiying which ansible roles to use
-  packer build -var $1 -var $2 Packer/pk_t.json
+  cd Packer
+  packer build -var $1 -var $2 pk_t.json
 
   # check for manifest file for ami_id
   while [ ! -f ${MAN} ]
