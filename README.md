@@ -97,21 +97,20 @@ ssh -i key_ec2.pem ubuntu@webserver_private_ip
 **Role 1 - Web**
 - updates all packages
 - pulls code from repository
-- installs apache
-      - WSGI mod for serving Python app
-      - Security mod
-      - enable virtual site
-      - update apache config with new directory
+- install apache
+- install apache WSGI mod for serving Python app
+- apache Security mod
+- enable virtual site
+- update apache config with new directory
 - installs python requirements from repo
 - installs/enables NTP (chronyd), telnet, mtr, tree
 
 **Role 2 - Harden**
-- covers requirements
-      - disable IPv6
-      - sets max "open files" limit across all users/processes, soft & hard, to 65535
-      - SELinux
-      - SSH Security
-      - Firewall
+- disable IPv6
+- sets max "open files" limit across all users/processes, soft & hard, to 65535
+- SELinux
+- SSH Security
+- Firewall
 
 *Configuration Note*
 - modifying config files involves a mixture of bash scripting, templating, lineinfile
@@ -121,12 +120,12 @@ ssh -i key_ec2.pem ubuntu@webserver_private_ip
 - Or alternatively use ansible template module with jinja2 variable substitution and move whole apache configuration file to server
 
 ### Packer
-Markup : * Creates 2 AMI's
-            * Web Server
-                * Ansible Roles Harden and Web
+Creates 2 AMI's
+1. Web Server
+- Ansible Roles Harden and Web
 
-            * Bastion
-                * Ansible Roles Harden
+2. Bastion
+- Ansible Roles Harden
 
 ### Terraform - AWS
 
