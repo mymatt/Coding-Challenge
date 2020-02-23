@@ -17,3 +17,13 @@ There are 3 stages
 
 #### Objective
 Fully Automate all 3 stages
+
+### Bash Scripts
+1) Script for updating Terraform variables
+   - Credentials Profile, Account Owner ID
+2) Script for Launching each of the 3 Stages
+   - automates all stages
+
+### Installation Requirements
+- Packer https://packer.io/
+- Terraform https://www.terraform.io/
