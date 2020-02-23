@@ -121,12 +121,12 @@ ssh -i key_ec2.pem ubuntu@webserver_private_ip
 - Or alternatively use ansible template module with jinja2 variable substitution and move whole apache configuration file to server
 
 ### Packer
-- Creates 2 AMI's
-      - Web Server
-        - Ansible Roles Harden and Web
+Markup : * Creates 2 AMI's
+            * Web Server
+                * Ansible Roles Harden and Web
 
-      - Bastion
-        - Ansible Roles Harden
+            * Bastion
+                * Ansible Roles Harden
 
 ### Terraform - AWS
 
