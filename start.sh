@@ -26,3 +26,17 @@ ami_setup(){
   sed -i -e "/${AMI_TYPE}/{n;s/= .*$/= \"${AMI_ID}\"/;}" Terraform/io.tf
   set +x
 }
+
+# Create AMI's and Pass AMI_ID's to Terraform
+
+echo "---------------------------------------------------"
+echo "Running Packer - Creating AMI's"
+echo "---------------------------------------------------"
+
+# Create Bastion AMI
+echo "***** Creating Bastion AMI..."
+ami_setup "'roles=harden'" "'name=bastion'" 'bastion_ami_id'
+
+# Create Web AMI
+echo "***** Creating Web AMI..."
+ami_setup "'roles=harden,web'" "'name=web'" 'web_ami_id'
