@@ -145,6 +145,16 @@ Creates 2 AMI's
 
 ![Image Stages](https://github.com/mymatt/Coding-Challenge/blob/master/images/AfterPay_sec.png)
 
+### Destroy
+- Currently working on script to cover Packer and Terraform, in the interim use:
+- Terraform
+```
+cd terraform
+terraform destroy
+```
+- Packer
+Via AWS Console
+
 ### Improvements
 - CI/CD Pipeline to replace Bash Script
 - Many additional hardening and security measures, i.e apache modsecurity
@@ -153,4 +163,4 @@ Creates 2 AMI's
 - No need for NAT Gateways because of Packer
 - Use Molecule to test ansible role
 - Use of Docker containers, ECS
-- Currently working on script to destroy: packer AMI/Snapshots, terraform infrastructure 
+- Currently working on script to destroy: packer AMI/Snapshots, terraform infrastructure
