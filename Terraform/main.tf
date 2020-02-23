@@ -40,3 +40,34 @@ resource "local_file" "vpc_id" {
     command = "chmod 600 ${var.key_name}.pem"
   }
 }
+
+#---------------------------------------------------
+# Setup IAM Role for EC2
+#---------------------------------------------------
+resource "aws_iam_role" "ec2_access_role" {
+  name               = "ec2_role"
+  assume_role_policy = data.aws_iam_policy_document.ec2policy.json
+}
+
+data "aws_iam_policy_document" "ec2policy" {
+  statement {
+    effect = "Allow"
+
+    actions = [
+      "sts:AssumeRole",
+    ]
+
+    principals {
+      type = "Service"
+
+      identifiers = [
+        "ec2.amazonaws.com",
+      ]
+    }
+  }
+}
+
+resource "aws_iam_instance_profile" "ec2_profile" {
+  name = "ec2_iam_profile"
+  role = aws_iam_role.ec2_access_role.name
+}
