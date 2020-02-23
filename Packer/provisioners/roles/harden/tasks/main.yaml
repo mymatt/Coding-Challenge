@@ -1,0 +1,16 @@
+---
+
+- name: Update and upgrade apt packages
+  become: 'True'
+  apt:
+    upgrade: yes
+    update_cache: yes
+
+- name: Installation
+  apt:
+    name: "{{ packages }}"
+    update_cache: yes
+    state: latest
+  vars:
+    packages:
+      - selinux-utils
