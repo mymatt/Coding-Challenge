@@ -27,3 +27,38 @@ Fully Automate all 3 stages
 ### Installation Requirements
 - Packer https://packer.io/
 - Terraform https://www.terraform.io/
+
+### AWS Requirements
+- Account Setup
+AWS account must be created
+
+![Image Account](/Users/M/Employment/DevOps/Project/aws_account.png)
+
+- Generate Credentials on AWS
+Retrieve Access and Secret Keys, and Account Number
+
+- Store credentials here: ~/.aws/credentials
+```
+[profile_name]
+aws_access_key_id = ""
+aws_secret_access_key = ""
+region = ap-southeast-2
+```
+- ~/.bash_profile option:
+```
+export AWS_ACCESS_KEY_ID=''
+export AWS_SECRET_ACCESS_KEY=''
+export AWS_REGION='ap-southeast-2'
+export AWS_PROFILE=''
+export AWS_ACCOUNT=''
+```
+- tfvar.sh will update necessary terraform variables
+
+Ensure script is executable
+```
+chmod +x tfvar.sh
+```
+Run script
+```
+./tfvar.sh -v ec2profile=art account_ami_owner=notart
+```
