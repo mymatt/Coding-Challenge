@@ -119,3 +119,38 @@ ssh -i key_ec2.pem ubuntu@webserver_private_ip
   In this case, a whole line is replaced, by matching the first part of the line, so idempotence is achieved
 - Lineinfile with regexp to achieve idempotence
 - Or alternatively use ansible template module with jinja2 variable substitution and move whole apache configuration file to server
+
+### Packer
+- Creates 2 AMI's
+      + Web Server
+        - Ansible Roles Harden and Web
+
+      + Bastion
+        - Ansible Roles Harden
+
+### Terraform - AWS
+
+![Image Stages](/Users/M/Employment/DevOps/Project/AfterPay2.png)
+
+- 2 Availability Zones
+- Public and Private Subnets (2 Each. 1 for each AZ for Redundancy)
+- EC2 Instances for Bastion, Web Server
+- Elastic Load Balancer (Classic)
+- Auto Scaling Groups
+- Internet Gateways
+- NAT Gateways (redundant because of packer)
+
+### Security Groups
+- Bastion has ssh and icmp access to all security groups
+- Web Server receives traffic only via Load Balancer
+- Load Balancer is public facing
+
+![Image Stages](/Users/M/Employment/DevOps/Project/AfterPay3.png)
+
+### Improvements
+- CI/CD Pipeline to replace Bash Script
+- Many additional hardening and security measures, only touched upon a few
+- Migrate to Application Load Balancer from Classic
+- No need for NAT Gateways because of Packer
+- Use Molecule to test ansible role
+- Use of Docker containers, ECS
