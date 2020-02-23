@@ -51,3 +51,30 @@
      src: "{{ repo_folder }}/tiny_app.py"
      dest: "{{ apache_dir }}"
   delegate_to: localhost
+
+- name: add wsgi file
+  template:
+    src: tiny_app.wsgi.j2
+    dest: "{{ apache_dir }}/tiny_app.wsgi"
+  delegate_to: localhost
+
+- name: add virtualhost
+  template:
+    src: tiny_app.conf.j2
+    dest: "{{ apache_config }}/tiny_app.conf"
+  delegate_to: localhost
+
+- name: Web Server config directory - apache2.conf
+  shell: 'sudo sed -i -e "s/^<Directory \\/var\\/www.*$/<Directory \\/var\\/www\\/python\\/>/" /etc/apache2/apache2.conf'
+
+- name: enable virtual site
+  command: a2ensite tiny_app.conf
+
+- name: disable default site
+  command: a2dissite 000-default.conf
+
+- name: enable mod-wsgi
+  command: a2enmod wsgi
+
+- name: enable mod-security
+  command: a2enmod mod-security
