@@ -23,3 +23,14 @@
       - git
       - python3-pip
       - libapache2-modsecurity
+
+- name: Create home
+  file:
+    path: "{{ apache_dir }}"
+    state: directory
+
+- name: get Git Repo Code
+  git:
+    repo: "{{ git_repo }}"
+    dest: "{{ repo_folder }}"
+    update: yes
