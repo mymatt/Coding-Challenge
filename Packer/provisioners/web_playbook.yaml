@@ -11,9 +11,13 @@
     dest_folder: /tmp
 
   tasks:
+  - name: create list of incoming roles
+    set_fact:
+      ansible_roles: "{{ a_roles.split(',') }}"
+      
   - name: install roles
     include_role:
       name: "{{ item }}"
     vars:
       dest_dir: "{{ dest_folder }}"
-    with_items: "{{ a_roles }}"
+    with_items: "{{ ansible_roles }}"
