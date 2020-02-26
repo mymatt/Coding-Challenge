@@ -13,6 +13,8 @@
   vars:
     packages:
       - selinux-utils
+      - policycoreutils
+      - checkpolicy
 
 - name: Disable IPv6
   sysctl:
@@ -48,13 +50,23 @@
     - { name: '^#?PermitRootLogin', value: 'PermitRootLogin no' }
     - { name: '^#?AllowUsers', value: 'AllowUsers ubuntu' }
     - { name: '^#?AllowAgentForwarding', value: 'AllowAgentForwarding yes' }
+    - { name: '^#?PubkeyAuthentication', value: 'PubkeyAuthentication yes' }
+    - { name: '^#?PermitRootLogin', value: 'PermitRootLogin no' }
+    - { name: '^#?PasswordAuthentication', value: 'PasswordAuthentication no' }
   loop_control:
     loop_var: ssh
 
-- name: Enable SELinux
-  selinux:
-    policy: targeted
-    state: enforcing
+# - name: "Allow ports for selinux"
+#   seport:
+#     ports: "{{ ssh_port }}"
+#     proto: tcp
+#     setype: ssh_port_t
+#     state: present
+#
+# - name: Enable SELinux
+#   selinux:
+#     policy: targeted
+#     state: enforcing
 
 - name: "Ensure SSH Port Open on Firewall"
   ufw:
