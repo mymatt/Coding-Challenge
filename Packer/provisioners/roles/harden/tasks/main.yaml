@@ -56,20 +56,9 @@
   with_items:
     - { name: '^#?PermitRootLogin', value: 'PermitRootLogin no' }
     - { name: '^#?AllowUsers', value: 'AllowUsers ubuntu' }
-    - { name: '^#?ForwardAgent', value: 'ForwardAgent yes' }
+    - { name: '^#?AllowAgentForwarding', value: 'AllowAgentForwarding yes' }
   loop_control:
     loop_var: ssh
-
-- name: SSH Tunnneling
-  lineinfile:
-    state: present
-    path: /etc/ssh/ssh_config
-    regexp: "{{ ssht.name }}"
-    line: "{{ ssht.value }}"
-  with_items:
-    - { name: '^#?ForwardAgent', value: 'ForwardAgent yes' }
-  loop_control:
-    loop_var: ssht
 
 # - name: Enable SELinux
 #   selinux:

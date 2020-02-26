@@ -80,17 +80,17 @@ Launch
 ### SSH
 - Terraform generates key in terraform directory
 - Public IP address of Bastion is output to Command Line to retrieve
-- Transfer key to bastion
+- Add private key
 ```
-scp -i key_ec2.pem key_ec2.pem ubuntu@bastion_public_ip:~/
+ssh-add -K key_ec2.pem
 ```
 - ssh into bastion
 ```
-ssh -i key_ec2.pem ubuntu@bastion_public_ip
+ssh -A ubuntu@bastion_public_ip
 ```
 - ssh into Web Server
 ```
-ssh -i key_ec2.pem ubuntu@webserver_private_ip
+ssh ubuntu@webserver_private_ip
 ```
 
 ### Ansible Roles
