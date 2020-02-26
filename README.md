@@ -80,7 +80,7 @@ Launch
 - The Load Balancer DNS is output to Command Line to retrieve e.g elbweb-886245521.ap-southeast-2.elb.amazonaws.com
 - Enter into browser to view 'Hello Afterpay!'
 
-### SSH
+### SSH Tunneling 
 - Terraform generates key in terraform directory
 - Public IP address of Bastion is output to Command Line to retrieve
 - Add private key
@@ -89,11 +89,11 @@ ssh-add -K key_ec2.pem
 ```
 - ssh into bastion
 ```
-ssh -A ubuntu@bastion_public_ip
+ssh -A ubuntu@bastion_public_ip -p 61613
 ```
 - ssh into Web Server
 ```
-ssh ubuntu@webserver_private_ip
+ssh ubuntu@webserver_private_ip -p 61613
 ```
 
 ### Ansible Roles
