@@ -3,10 +3,10 @@
 #---------------------------------------------------
 terraform {
   backend "s3" {
-    bucket  = "tf-mm-state"
+    bucket  = "awsbucket"
     key     = "terraform_aws_wp.tfstate"
-    region  = "ap-southeast-2"
-    profile = "ec2play"
+    region  = "awsregion"
+    profile = "awsprofile"
   }
 }
 

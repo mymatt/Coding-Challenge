@@ -3,7 +3,7 @@
 #---------------------------------------------------
 
 variable "ec2profile" {
-  default = "ec2play"
+  default = "awsprofile"
 }
 
 variable "cred_file" {
@@ -11,15 +11,15 @@ variable "cred_file" {
 }
 
 variable "region" {
-  default = "ap-southeast-2"
+  default = "awsregion"
 }
 
 variable "availability_zone_1" {
-  default = "ap-southeast-2a"
+  default = "awsregiona"
 }
 
 variable "availability_zone_2" {
-  default = "ap-southeast-2b"
+  default = "awsregionb"
 }
 
 # Instance Config for Bastion
@@ -30,9 +30,9 @@ variable "instance_config" {
     "0" = {
       name = "bastion"
 
-      region = "ap-southeast-2"
+      region = "awsregion"
 
-      availability_zone = "ap-southeast-2a"
+      availability_zone = "awsregiona"
 
       instance_type = "t2.micro"
 
@@ -51,9 +51,9 @@ variable "instance_config_asg" {
     "0" = {
       name = "web"
 
-      region = "ap-southeast-2"
+      region = "awsregion"
 
-      availability_zone = "ap-southeast-2a"
+      availability_zone = "awsregiona"
 
       instance_type = "t2.micro"
 
@@ -91,14 +91,6 @@ variable "elb_config" {
 # only one Load Balancer
 variable "elb_num" {
   default = "1"
-}
-
-variable "amis" {
-  type = map
-
-  default = {
-    "ap-southeast-2" = "ami-5e8bb23b"
-  }
 }
 
 variable "key_name" {
@@ -142,7 +134,7 @@ variable "ami_type" {
 }
 
 variable "account_ami_owner" {
-  default = "764573172366"
+  default = "awsowner"
 }
 
 variable "ubuntu_ami_owner" {
@@ -150,11 +142,11 @@ variable "ubuntu_ami_owner" {
 }
 
 variable "web_ami_id" {
-  default = ""
+  default = "ami-038725607463d2cc6"
 }
 
 variable "bastion_ami_id" {
-  default = ""
+  default = "ami-0601358a5a8cdd8fa"
 }
 
 variable "sg" {

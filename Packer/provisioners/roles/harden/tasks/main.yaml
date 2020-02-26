@@ -6,22 +6,13 @@
     upgrade: yes
     update_cache: yes
 
-# - name: Installation
-#   apt:
-#     name: "{{ packages }}"
-#     update_cache: yes
-#     state: latest
-#   vars:
-#     packages:
-#       - python3-selinux
-#       - selinux-policy
-
-# - name: Install SELinux python3 tools
-#   package:
-#     name:
-#       - libselinux-python3
-#       - policycoreutils-python3
-#     state: present
+- name: Installation
+  apt:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+      - selinux-utils
 
 - name: Disable IPv6
   sysctl:
@@ -60,13 +51,19 @@
   loop_control:
     loop_var: ssh
 
-# - name: Enable SELinux
-#   selinux:
-#     policy: targeted
-#     state: enforcing
+- name: Enable SELinux
+  selinux:
+    policy: targeted
+    state: enforcing
 
 - name: "Ensure SSH Port Open on Firewall"
   ufw:
     rule: allow
     port: "{{ ssh_port }}"
     proto: tcp
+
+- name: UFW - Deny all other incoming traffic by default
+  ufw:
+    state: enabled
+    policy: deny
+    direction: incoming

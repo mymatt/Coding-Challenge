@@ -52,7 +52,10 @@ export AWS_REGION='ap-southeast-2'
 export AWS_PROFILE=''
 export AWS_ACCOUNT=''
 ```
+- create S3 bucket for storing terraform state
+
 - tfvar.sh will update necessary terraform variables
+The variables we wish to update are: profile name, owner id, bucket for state, region
 
 Ensure script is executable
 ```
@@ -60,7 +63,7 @@ chmod +x tfvar.sh
 ```
 Run script
 ```
-./tfvar.sh -v ec2profile=art account_ami_owner=notart
+./tfvar.sh awsprofile=art awsregion=notart awsowner=art awsbucket=notart
 ```
 
 ### Run
