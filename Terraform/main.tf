@@ -3,10 +3,10 @@
 #---------------------------------------------------
 terraform {
   backend "s3" {
-    bucket  = "awsbucket"
+    bucket  = "tf-mm-state"
     key     = "terraform_aws_wp.tfstate"
-    region  = "awsregion"
-    profile = "awsprofile"
+    region  = "ap-southeast-2"
+    profile = "ec2play"
   }
 }
 
@@ -314,6 +314,13 @@ data "aws_instance" "bastion" {
 
   depends_on = [aws_instance.bastion]
 }
+
+data "aws_elb" "elb" {
+  name = lookup(var.elb_config[0], "name")
+
+  depends_on = [aws_elb.elb]
+}
+
 
 #---------------------------------------------------
 # Elastic IP's required for NAT Gateways
