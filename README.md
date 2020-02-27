@@ -80,7 +80,7 @@ Launch
 - The Load Balancer DNS is output to Command Line to retrieve e.g elbweb-886245521.ap-southeast-2.elb.amazonaws.com
 - Enter into browser to view 'Hello Afterpay!'
 
-### SSH Tunneling 
+### SSH Tunneling
 - Terraform generates key in terraform directory
 - Public IP address of Bastion is output to Command Line to retrieve
 - Add private key
@@ -110,7 +110,6 @@ ssh ubuntu@webserver_private_ip -p 61613
 **Role 2 - Harden**
 - disable IPv6
 - sets max "open files" limit across all users/processes, soft & hard, to 65535
-- SELinux
 - SSH Security
 - Firewall
 
@@ -160,10 +159,7 @@ Via AWS Console
 
 ### Improvements
 - CI/CD Pipeline to replace Bash Script
-- Many additional hardening and security measures, i.e apache modsecurity
-- Encountered a few SELinux install issues currently working through
+- Additional hardening and security measures, i.e apache modsecurity
 - Migrate to Application Load Balancer from Classic
-- No need for NAT Gateways because of Packer
 - Use Molecule to test ansible role
 - Use of Docker containers, ECS
-- Currently working on script to destroy: packer AMI/Snapshots, terraform infrastructure
