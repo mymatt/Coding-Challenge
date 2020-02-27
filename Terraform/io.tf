@@ -168,5 +168,5 @@ output "bastion_public_ip" {
 
 # output DNS name for Load Balancer to test
 output "ext_proxy_elb_dns" {
-  value = "${element(aws_elb.elb.*.dns_name, 0)}"
+  value = "${data.aws_elb.elb.dns_name}"
 }
