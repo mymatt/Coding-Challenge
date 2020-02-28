@@ -148,7 +148,6 @@ Creates 2 AMI's
 ![Image Stages](https://github.com/mymatt/Coding-Challenge/blob/master/images/AfterPay_sec.png)
 
 ### Destroy
-- Currently working on script to cover Packer and Terraform, in the interim use:
 - Terraform
 ```
 cd terraform
@@ -163,3 +162,4 @@ Via AWS Console
 - Migrate to Application Load Balancer from Classic
 - Use Molecule to test ansible role
 - Use of Docker containers, ECS
+- automate deletion resources created by packer + terraform
