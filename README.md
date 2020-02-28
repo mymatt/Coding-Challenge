@@ -80,7 +80,8 @@ Launch
 - The Load Balancer DNS is output to Command Line to retrieve e.g elbweb-886245521.ap-southeast-2.elb.amazonaws.com
 - Enter into browser to view 'Hello Afterpay!'
 
-### SSH Tunneling
+### SSH (Agent Forwarding)
+- Agent forwarding setup in harden ansible role
 - Terraform generates key in terraform directory
 - Public IP address of Bastion is output to Command Line to retrieve
 - Add private key
