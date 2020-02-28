@@ -89,11 +89,11 @@ ssh-add -K key_ec2.pem
 ```
 - ssh into bastion
 ```
-ssh -A ubuntu@bastion_public_ip -p 61613
+ssh -A ubuntu@bastion_public_ip
 ```
 - ssh into Web Server
 ```
-ssh ubuntu@webserver_private_ip -p 61613
+ssh ubuntu@webserver_private_ip
 ```
 
 ### Ansible Roles
