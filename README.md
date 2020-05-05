@@ -1,5 +1,5 @@
 
-## Recruitment Challenge
+## Coding Challenge
 
 ### Tools / Resources
 - Orchestration - *Terraform*
